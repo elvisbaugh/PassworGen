@@ -18,15 +18,28 @@ namespace PasswordGeneratorApp.Tests.Controllers
         [TestMethod]
         public void Given_ID_Return_Password()
         {
-            PasswordController controller = new PasswordController();
-            ValidatePasswordWithID validate = new ValidatePasswordWithID();
-            ViewResult result = controller.Index("18085228") as ViewResult;
-            List<string> expected = new List<string>() { "18085228", "xwtyj" };
-            List<PasswordsAndIds> actualVlaue = new List<PasswordsAndIds>();
-            actualVlaue.Contains(expected);
-            Assert.AreNotEqual(expected, actualVlaue);
+            string iDvalue = "18085228";
 
-                }
+            PasswordController controller = new PasswordController();
+            ViewResult result = controller.Index(iDvalue) as ViewResult;
+            var model = result.Model as ValidatePasswordWithID;
+            var viewModel = result.Model as PasswordsAndIds;
+
+
+            viewModel = model.ValidatePassword(iDvalue);
+            result.TempData["iDNumber"] = viewModel.ID;
+            result.TempData["password"] = viewModel.Password;
+
+            string expectedId =  "18085228";
+            string expectedPassword = "Xwyzh";
+
+            string actualIdValue = Convert.ToString(result.TempData["iDNumber"]);
+            string actualPasswordValue = Convert.ToString(result.TempData["password"]);
+
+            Assert.AreNotEqual(expectedPassword, actualPasswordValue);
+            Assert.AreEqual(expectedId, actualIdValue);
+
+        }
         [TestMethod]
         public void Index()
         {

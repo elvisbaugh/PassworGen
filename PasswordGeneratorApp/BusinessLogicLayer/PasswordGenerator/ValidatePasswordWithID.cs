@@ -11,21 +11,26 @@ namespace BusinessLogicLayer.PasswordGenerator
     {
         private string _idByteString;
         private string _passwordByteString;
+        private string _passwordString;
 
         public ValidatePasswordWithID()
         {
             this._idByteString = String.Empty;
             this._passwordByteString = String.Empty;
+            this._passwordString = String.Empty;
         }
 
-        public List<PasswordsAndIds> ValidatePassword(string idNumber)
+        public PasswordsAndIds ValidatePassword(string idNumber)
         {
 
             GenerateNewPassword newPassword = new GenerateNewPassword();
-           List< PasswordsAndIds> passwordAndId = new List<PasswordsAndIds>();
+           PasswordsAndIds passwordAndId = new PasswordsAndIds();
+
+            _passwordString = newPassword.Generate();
 
 
-            foreach(char password in newPassword.Generate())
+
+            foreach (char password in _passwordString)
             {
                 _passwordByteString += ((byte)password).ToString();
             }
@@ -35,26 +40,31 @@ namespace BusinessLogicLayer.PasswordGenerator
                 _idByteString += ((byte)c).ToString();
             }
 
+            
+
+            string passwordTruncatedString = (_passwordByteString.Length > 3) ? _passwordByteString.Substring(_passwordByteString.Length - 5, 5) : _passwordByteString;
+            string idTruncatedString = (_idByteString.Length > 3) ? _idByteString.Substring(_idByteString.Length - 5, 5) : _idByteString;
 
 
-            int idFourBytCode = Convert.ToInt32(_idByteString.Remove(0, 11));
 
-            int passwordFourByteCode = Convert.ToInt32(_passwordByteString.Remove(0, 11));
+            int idFiveBytCode = Convert.ToInt32(idTruncatedString);
 
-            int byteCodeKey = idFourBytCode + passwordFourByteCode;
+            int passwordFiveByteCode = Convert.ToInt32(passwordTruncatedString);
+
+            int byteCodeKey = idFiveBytCode + passwordFiveByteCode;
 
 
-            if (byteCodeKey - passwordFourByteCode != idFourBytCode)
+            if (byteCodeKey - passwordFiveByteCode != idFiveBytCode)
             {
                 ValidatePassword(idNumber);
             }
             else
             {
-                PasswordsAndIds newCredentials = new PasswordsAndIds();
-                newCredentials.ID = _idByteString;
-                newCredentials.Password = _passwordByteString;
 
-                passwordAndId.Add(newCredentials);
+                passwordAndId.ID = idNumber;
+                passwordAndId.Password = _passwordString;
+
+                
             }
 
             return passwordAndId; 

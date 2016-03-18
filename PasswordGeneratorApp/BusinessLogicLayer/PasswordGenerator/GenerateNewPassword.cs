@@ -9,7 +9,7 @@ namespace BusinessLogicLayer
     public class GenerateNewPassword
     {
         private const string AllowedCharacters = "abcdefghijkmnopqrstuvwxyzABCDEFGHJKLMNOPQRSTUVWXYZ0123456789 - ";
-        public string PasswordValue { get; set; }
+        private string _passwordValue;
 
         public string Generate()
         {
@@ -17,9 +17,9 @@ namespace BusinessLogicLayer
             for (int i = 0; i <= 4; i++)
             {
                 int RandomValue = rnd.Next(0, AllowedCharacters.Length - 1);
-                PasswordValue += AllowedCharacters.Substring(RandomValue, 1);
+                _passwordValue += AllowedCharacters.Substring(RandomValue, 1);
             }
-            return PasswordValue;
+            return _passwordValue;
         }
             
 

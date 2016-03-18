@@ -1,4 +1,4 @@
-﻿@model PasswordGeneratorApp.Models.ViewPassword
+﻿@model PasswordGeneratorApp.Models.SingleIdView
 
 @{
     ViewBag.Title = "Index";
@@ -12,22 +12,14 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ViewPassword</h4>
+        <h4>SingleIdView</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.ViewID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.IdentificationNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ViewID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ViewID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ViewGeneratedPassword, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ViewGeneratedPassword, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ViewGeneratedPassword, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.IdentificationNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IdentificationNumber, "", new { @class = "text-danger" })
             </div>
         </div>
 

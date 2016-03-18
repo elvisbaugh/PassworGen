@@ -20,26 +20,38 @@ namespace PasswordGeneratorApp.Controllers
         }
         
         [HttpPost]
-         public ActionResult Index(string generator)
+         public ActionResult Index(string identificationNumber)
         {
-            PasswordsAndIds isPasswordExpire = new PasswordsAndIds();
-            
             ValidatePasswordWithID validate = new ValidatePasswordWithID();
-            List<PasswordsAndIds> viewPassword = validate.ValidatePassword(generator);
+            PasswordsAndIds viewPassword = validate.ValidatePassword(identificationNumber);
 
-            Session["VerificationCode"] = isPasswordExpire.Password;
-            Session["VerificationTime"] = DateTime.Now;
-
-            if (Convert.ToDateTime(Session["VerificationTime"]).AddSeconds(30) < DateTime.Now)
-                {
-                ModelState.AddModelError("VerificationCode", "Verification Code Expired!");
-                viewPassword = validate.ValidatePassword(generator);
-                return View(viewPassword);
-            }
            
-                List<PasswordsAndIds> generarePassword = validate.ValidatePassword(generator);
-                return View(viewPassword);
+            ViewPasswordAndId viewPasswordAndId = new ViewPasswordAndId();
+
+            viewPasswordAndId.ViewGeneratedPassword = viewPassword.Password;
+            viewPasswordAndId.ViewID = viewPassword.ID;
+
+            TempData["iDNumber"] = viewPasswordAndId.ViewID;
+            TempData["password"] = viewPasswordAndId.ViewGeneratedPassword;
+
+            return RedirectToAction("DisplayIdAndPassword");
             
+        }
+
+        public ActionResult DisplayIdAndPassword()
+        {
+            ViewPasswordAndId isPasswordExpire = new ViewPasswordAndId();
+
+            isPasswordExpire.ViewID = Convert.ToString(TempData["iDNumber"]);
+            isPasswordExpire.ViewGeneratedPassword = Convert.ToString(TempData["password"]);
+
+            if (Session["EndDate"] == null)
+            {
+                Session["EndDate"] = DateTime.Now.AddSeconds(30).ToString("dd-MM-yyyy h:mm:ss tt");
+            }
+
+            ViewBag.EndDate = Session["EndDate"];
+            return View(isPasswordExpire);
         }
     }
 }

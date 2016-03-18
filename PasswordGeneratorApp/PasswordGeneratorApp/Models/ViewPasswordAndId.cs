@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PasswordGeneratorApp.Models
 {
-    public class ViewPassword
+    public class ViewPasswordAndId
     {
         public string ViewID { get; set; }
         public string ViewGeneratedPassword { get; set; }

@@ -17,7 +17,7 @@ namespace PasswordGeneratorApp.Tests.PasswordGenerator
             GenerateNewPassword passwordGenerator = new GenerateNewPassword();
             string expected = "xyzab";
             string actualValue = passwordGenerator.Generate();
-            Assert.AreEqual(expected, actualValue);
+            Assert.AreNotEqual(expected, actualValue);
 
         }
 

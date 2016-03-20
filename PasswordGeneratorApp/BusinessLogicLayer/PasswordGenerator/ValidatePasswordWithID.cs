@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BusinessLogicLayer.Models;
+using BusinessLogicLayer.Interfaces;
 
 namespace BusinessLogicLayer.PasswordGenerator
 {
-    public class ValidatePasswordWithID
+    public class ValidatePasswordWithID : IValidatePassword
     {
         private string _idByteString;
         private string _passwordByteString;

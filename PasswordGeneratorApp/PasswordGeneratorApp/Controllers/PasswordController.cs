@@ -6,11 +6,25 @@ using System.Web;
 using System.Web.Mvc;
 using BusinessLogicLayer.PasswordGenerator;
 using BusinessLogicLayer.Models;
+using BusinessLogicLayer.Interfaces;
 
 namespace PasswordGeneratorApp.Controllers
 {
     public class PasswordController : Controller
     {
+        private IValidatePassword validate;
+
+        public PasswordController (IValidatePassword validate)
+        {
+            this.validate = validate;
+        }
+
+        public PasswordController()
+        {
+            this.validate = new ValidatePasswordWithID();
+        }
+
+
         // GET: Password
         [HttpGet]
         public ActionResult Index()
@@ -18,24 +32,27 @@ namespace PasswordGeneratorApp.Controllers
             
             return View();
         }
-        
+
         [HttpPost]
-         public ActionResult Index(string identificationNumber)
+        public ActionResult Index(string identificationNumber)
         {
-            ValidatePasswordWithID validate = new ValidatePasswordWithID();
-            PasswordsAndIds viewPassword = validate.ValidatePassword(identificationNumber);
+            if (ModelState.IsValid)
+            {
+                PasswordsAndIds viewPassword = validate.ValidatePassword(identificationNumber);
 
-           
-            ViewPasswordAndId viewPasswordAndId = new ViewPasswordAndId();
 
-            viewPasswordAndId.ViewGeneratedPassword = viewPassword.Password;
-            viewPasswordAndId.ViewID = viewPassword.ID;
+                ViewPasswordAndId viewPasswordAndId = new ViewPasswordAndId();
 
-            TempData["iDNumber"] = viewPasswordAndId.ViewID;
-            TempData["password"] = viewPasswordAndId.ViewGeneratedPassword;
+                viewPasswordAndId.ViewGeneratedPassword = viewPassword.Password;
+                viewPasswordAndId.ViewID = viewPassword.ID;
 
-            return RedirectToAction("DisplayIdAndPassword");
-            
+                TempData["iDNumber"] = viewPasswordAndId.ViewID;
+                TempData["password"] = viewPasswordAndId.ViewGeneratedPassword;
+
+                return RedirectToAction("DisplayIdAndPassword");
+
+            }
+            return View();
         }
 
         public ActionResult DisplayIdAndPassword()

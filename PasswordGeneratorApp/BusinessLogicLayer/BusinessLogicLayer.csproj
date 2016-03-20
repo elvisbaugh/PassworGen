@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Interfaces\IPasswordIdRepository.cs" />
+    <Compile Include="Interfaces\IValidatePassword.cs" />
     <Compile Include="Models\PasswordsAndIds.cs" />
     <Compile Include="PasswordGenerator\GenerateNewPassword.cs" />
     <Compile Include="PasswordGenerator\ValidatePasswordWithID.cs" />

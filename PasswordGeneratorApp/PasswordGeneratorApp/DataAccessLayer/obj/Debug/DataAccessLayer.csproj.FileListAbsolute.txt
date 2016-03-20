@@ -1,0 +1,7 @@
+C:\Users\Min\Documents\Visual Studio 2015\Projects\PasswordGeneratorApp\DataAccessLayer\bin\Debug\DataAccessLayer.dll
+C:\Users\Min\Documents\Visual Studio 2015\Projects\PasswordGeneratorApp\DataAccessLayer\bin\Debug\DataAccessLayer.pdb
+C:\Users\Min\Documents\Visual Studio 2015\Projects\PasswordGeneratorApp\DataAccessLayer\bin\Debug\BusinessLogicLayer.dll
+C:\Users\Min\Documents\Visual Studio 2015\Projects\PasswordGeneratorApp\DataAccessLayer\bin\Debug\BusinessLogicLayer.pdb
+C:\Users\Min\Documents\Visual Studio 2015\Projects\PasswordGeneratorApp\DataAccessLayer\obj\Debug\DataAccessLayer.csprojResolveAssemblyReference.cache
+C:\Users\Min\Documents\Visual Studio 2015\Projects\PasswordGeneratorApp\DataAccessLayer\obj\Debug\DataAccessLayer.dll
+C:\Users\Min\Documents\Visual Studio 2015\Projects\PasswordGeneratorApp\DataAccessLayer\obj\Debug\DataAccessLayer.pdb

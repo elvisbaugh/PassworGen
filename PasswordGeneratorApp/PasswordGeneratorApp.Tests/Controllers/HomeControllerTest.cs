@@ -9,6 +9,8 @@ using PasswordGeneratorApp.Controllers;
 using PasswordGeneratorApp.Models;
 using BusinessLogicLayer.PasswordGenerator;
 using BusinessLogicLayer.Models;
+using Telerik.JustMock;
+using BusinessLogicLayer.Interfaces;
 
 namespace PasswordGeneratorApp.Tests.Controllers
 {
@@ -18,28 +20,22 @@ namespace PasswordGeneratorApp.Tests.Controllers
         [TestMethod]
         public void Given_ID_Return_Password()
         {
-            string iDvalue = "18085228";
+            //Arrange
+            var validationOfPasswordWithId = Mock.Create<IValidatePassword>();
+            Mock.Arrange(() => validationOfPasswordWithId.ValidatePassword("18085228")).Returns(
+                new PasswordsAndIds() { ID = "18085228", Password = "Wxyzh" }
+                ).MustBeCalled();
 
-            PasswordController controller = new PasswordController();
-            ViewResult result = controller.Index(iDvalue) as ViewResult;
-            var model = result.Model as ValidatePasswordWithID;
-            var viewModel = result.Model as PasswordsAndIds;
+            //Act
+            var controller = new PasswordController(validationOfPasswordWithId);
+            ViewResult result = controller.Index("18085228") as ViewResult;
+            var model = result.Model as ViewPasswordAndId;
 
-
-            viewModel = model.ValidatePassword(iDvalue);
-            result.TempData["iDNumber"] = viewModel.ID;
-            result.TempData["password"] = viewModel.Password;
-
-            string expectedId =  "18085228";
-            string expectedPassword = "Xwyzh";
-
-            string actualIdValue = Convert.ToString(result.TempData["iDNumber"]);
-            string actualPasswordValue = Convert.ToString(result.TempData["password"]);
-
-            Assert.AreNotEqual(expectedPassword, actualPasswordValue);
-            Assert.AreEqual(expectedId, actualIdValue);
-
+            //Assert
+            Assert.AreEqual("18085228", model.ViewID);
+            Assert.AreEqual("Wxyzh", model.ViewID);
         }
+
         [TestMethod]
         public void Index()
         {
